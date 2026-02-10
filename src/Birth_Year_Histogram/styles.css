@@ -1,0 +1,48 @@
+.parent-container {
+    display: flex;
+    flex-direction: column;
+}
+
+.container {
+    display: flex;
+}
+
+.y-axis {
+    display: flex;
+    flex-direction: column-reverse;
+    row-gap: 20px;
+    padding-right: 20px;
+}
+
+.histogram {
+    display: flex;
+    height: 100%;
+    column-gap: 40px;
+    padding-left: 40px;
+    align-items: end;
+    border-bottom: 1px solid black;
+    border-left: 1px solid black;
+}
+
+.histogram div{
+    background-color: rgb(236, 128, 128);
+    border: 1px solid black;
+    border-bottom: 0;
+    width: 40px;
+}
+
+.years {
+    display: flex;
+    column-gap: 40px;
+    padding-left: 41px;
+}
+
+.years div {
+    width: 40px;
+    border: 1px solid transparent;
+}
+
+.reset-btn {
+    margin-top: 40px;
+    width: fit-content;
+}

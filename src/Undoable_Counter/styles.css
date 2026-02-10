@@ -1,0 +1,38 @@
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+.controls {
+    display: flex;
+}
+.operations {
+    display: flex;
+    column-gap: 10px;
+}
+
+.stack-header {
+    display: flex;
+}
+
+.stack-list{
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 300px;
+}
+
+.stack-item {
+    display: flex;
+    flex: 1;
+}
+
+.flex-column {
+    display: flex;
+    flex-direction: column;
+}
+
+.flex-column-reverse {
+    display: flex;
+    flex-direction: column-reverse;
+}

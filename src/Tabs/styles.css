@@ -1,0 +1,20 @@
+.tab-header {
+    display: flex;
+    gap: 10px;
+}
+
+.tab{
+    width: 100px;
+    background-color: white;    
+    padding: 5px;
+    border: 1px solid black;
+    border-radius: 10px;
+    text-align: center;
+    cursor: pointer;
+}
+
+.tab-selected {
+    background-color:rgb(0, 174, 255);
+    border-color: rgb(0, 174, 255);
+    color: white;
+}

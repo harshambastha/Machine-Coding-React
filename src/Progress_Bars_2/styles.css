@@ -1,0 +1,23 @@
+.progress-bars-container{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.progress-bar-container {
+    background-color: gray;
+    height: 10px;
+}
+.progress-bar {
+    height: 100%;
+    background-color: green;
+    transform: scaleX(0);
+    transform-origin: left;
+    transition-duration: 2000ms;
+    transition-property: transform;
+    transition-timing-function: linear;
+}
+
+.progress-bar-fill {
+    transform: scaleX(1);
+}

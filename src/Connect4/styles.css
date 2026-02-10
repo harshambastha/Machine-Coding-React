@@ -1,0 +1,42 @@
+.board {
+    display: flex;
+    flex-direction: column;
+    border-radius: 20px;
+    background-color: rgb(50, 50, 246);
+    gap: 20px;
+    padding: 20px;
+    width: fit-content;
+}
+
+.col-to-add {
+    display: flex;
+    gap: 20px;
+    padding-left: 20px;
+}
+
+.col-to-add div {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    cursor: pointer;
+}
+
+.hover-red:hover {
+    background-color: red;
+}
+
+.hover-yellow:hover {
+    background-color: yellow;
+}
+
+.row {
+    display: flex;
+    gap: 20px;
+}
+
+.dot {
+    height: 50px;
+    width: 50px;
+    border-radius: 50%;
+    background-color: white;
+}
