@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import "./style.css";
+import "./Autocomplete.css";
 
 const AutocompleteWithChips = () => {
     const [query, setQuery] = useState('');
@@ -47,7 +47,14 @@ const AutocompleteWithChips = () => {
                         <Chip key={q + index.toString()} label={q} handleChipDelete={onChipClick} />
                     ))}
                 </span>
-                <input value={query} onChange={(e) => setQuery(e.target.value)} className='search-input' onClick={()=>setShowResult(true)}/>
+                <input 
+                  value={query} 
+                  onChange={(e) => setQuery(e.target.value)} 
+                  className='autocomplete-input' 
+                  placeholder="Search and add items..."
+                  onClick={()=>setShowResult(true)}
+                  autoComplete="off"
+                />
             </div>
             {showResult && query && filteredResults.length > 0 && (
                 <ul className='autocomplete-list'>

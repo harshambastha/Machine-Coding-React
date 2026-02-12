@@ -1,0 +1,2 @@
+const list1 = [{ id: 'HTML', label: 'HTML' }, { id: 'JavaScript', label: 'JavaScript' }, { id: 'CSS', label: 'CSS' }, { id: 'TypeScript', label: 'TypeScript' }];
+const list2 = [{ id: 'React', label: 'React' }, { id: 'Angular', label: 'Angular' }, { id: 'Vue', label: 'Vue' }, { id: 'Svelte', label: 'Svelte' }];
