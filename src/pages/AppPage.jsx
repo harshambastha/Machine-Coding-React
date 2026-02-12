@@ -29,6 +29,7 @@ import { fileExplorerData } from '@data/fileExplorerData'
 import { emojis } from '@data/memoryGameData'
 import { list1, list2 } from '@data/transferListData'
 import { START_YEAR, END_YEAR } from '@data/histogramData'
+import { carouselItems } from '@data/carouselData'
 
 export default function AppPage() {
   const { appId } = useParams()
@@ -80,7 +81,7 @@ export default function AppPage() {
       case 'nested-checkboxes':
         return <NestedCheckboxes />
       case 'carousel':
-        return <Carousel />
+        return <Carousel items={carouselItems} />
       case 'tic-tac-toe-2':
         return <TicTacToe2 />
       default:
