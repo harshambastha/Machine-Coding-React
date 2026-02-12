@@ -1,5 +1,5 @@
 import { useState, useEffect, useId } from "react";
-import "./Autocomplete.css";
+import styles from "./Autocomplete.module.css";
 
 const Autocomplete = () => {
     const [query, setQuery] = useState('');
@@ -18,18 +18,18 @@ const Autocomplete = () => {
     const filteredValue = allResults.filter(item => item.title.includes(query));
 
     return (
-        <div className="autocomplete-container">
+        <div className={styles['autocomplete-container']}>
             <input
                 id={searchInput}
                 name="searchInput"
-                className="autocomplete-input"
+                className={styles['autocomplete-input']}
                 placeholder="Search..."
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
                 autoComplete="off"
             />
             {query && filteredValue.length > 0 && (
-                <ul className="autocomplete-list">
+                <ul className={styles['autocomplete-list']}>
                     {filteredValue.map((item) => (
                         <li key={item.id}>{item.title}</li>
                     ))}

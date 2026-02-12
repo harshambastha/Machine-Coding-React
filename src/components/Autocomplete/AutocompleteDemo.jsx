@@ -1,16 +1,16 @@
 import Autocomplete from './Autocomplete';
 import AutocompleteWithChips from './AutocompleteWithChips';
-import './Autocomplete.css';
+import styles from './Autocomplete.module.css';
 
 const AutocompleteDemo = () => {
   return (
-    <div className="autocomplete-demo-container">
-      <div className="demo-section">
+    <div className={styles['autocomplete-demo-container']}>
+      <div className={styles['demo-section']}>
         <h2>Simple Autocomplete</h2>
         <p>Basic search with dropdown suggestions</p>
         <Autocomplete />
       </div>
-      <div className="demo-section">
+      <div className={styles['demo-section']}>
         <h2>Autocomplete with Chips</h2>
         <p>Search with multi-select and chip display</p>
         <AutocompleteWithChips />

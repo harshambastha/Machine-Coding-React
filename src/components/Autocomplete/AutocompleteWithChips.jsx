@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
-import "./Autocomplete.css";
+import styles from "./Autocomplete.module.css";
 
 const AutocompleteWithChips = () => {
     const [query, setQuery] = useState('');
@@ -40,9 +40,9 @@ const AutocompleteWithChips = () => {
     const filteredResults = allData.filter(item => item.title.includes(query));
 
     return (
-        <div className="autocomplete-container" ref={containerRef}>
-            <div className="search-field">
-                <span className='all-chips'>
+        <div className={styles['autocomplete-container']} ref={containerRef}>
+            <div className={styles['search-field']}>
+                <span className={styles['all-chips']}>
                     {allQueries.map((q, index) => (
                         <Chip key={q + index.toString()} label={q} handleChipDelete={onChipClick} />
                     ))}
@@ -50,16 +50,16 @@ const AutocompleteWithChips = () => {
                 <input 
                   value={query} 
                   onChange={(e) => setQuery(e.target.value)} 
-                  className='autocomplete-input' 
+                  className={styles['autocomplete-input']} 
                   placeholder="Search and add items..."
                   onClick={()=>setShowResult(true)}
                   autoComplete="off"
                 />
             </div>
             {showResult && query && filteredResults.length > 0 && (
-                <ul className='autocomplete-list'>
+                <ul className={styles['autocomplete-list']}>
                     {filteredResults.map(q => (
-                        <li key={q.id?.toString()} onClick={e => addItem(q)} className='list-item'>{q.title}</li>
+                        <li key={q.id?.toString()} onClick={e => addItem(q)} className={styles['list-item']}>{q.title}</li>
                     ))}
                 </ul>
             )}
@@ -68,8 +68,8 @@ const AutocompleteWithChips = () => {
 }
 
 const Chip = ({ label, handleChipDelete }) => {
-    return (<span className='chip'>
-        {label} <span onClick={e=>handleChipDelete(label)} className='close-button'>x</span>
+    return (<span className={styles.chip}>
+        {label} <span onClick={e=>handleChipDelete(label)} className={styles['close-button']}>x</span>
     </span>)
 }
 
