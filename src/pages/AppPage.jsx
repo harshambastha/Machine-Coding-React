@@ -24,6 +24,7 @@ import UndoableCounter from '@components/UndoableCounter/UndoableCounter'
 import WhackAMole from '@components/WhackAMole/WhackAMole'
 
 import { accordionData } from '@data/accordionData';
+import DropdownDemo from '@components/Dropdown/DropdownDemo';
 import { tabData } from '@data/tabData';
 import { fileExplorerData } from '@data/fileExplorerData'
 import { emojis } from '@data/memoryGameData'
@@ -38,6 +39,8 @@ export default function AppPage() {
     switch (appId) {
       case 'generate-table':
         return <GenerateTable />
+      case 'dropdown':
+        return <DropdownDemo />;
       case 'autocomplete':
         return <AutocompleteDemo />
       case 'accordion':

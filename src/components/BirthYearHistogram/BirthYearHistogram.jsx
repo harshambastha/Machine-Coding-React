@@ -5,12 +5,12 @@ const BirthYearHistogram = () => {
     const [yAxis, setYAxis] = useState([]);
     const [xAxis, setXAxis] = useState([]);
 
-    const getHistogram = ()=>{
+    const getHistogram = () => {
         const yearsWithCount = new Map();
         const formattedYAxis = [];
         const formattedXAxis = [];
         let max = 0;
-    
+
         const getData = async () => {
             const res = await fetch(`https://www.random.org/integers/?num=200&min=1950&max=2019&col=1&base=10&format=plain`);
             const data = await res.text();
@@ -27,7 +27,7 @@ const BirthYearHistogram = () => {
                 }
                 max = Math.max(max, yearsWithCount.get(from));
             });
-    
+
             max = Math.floor((max + 10) / 10) * 10;
             for (let val = 0; val <= max; val += 10) {
                 formattedYAxis.push(val);
@@ -46,28 +46,28 @@ const BirthYearHistogram = () => {
         getHistogram();
     }, []);
 
-    const getNewData=()=>{
+    const getNewData = () => {
         getHistogram();
     }
 
     return (
         <div className={styles['parent-container']}>
-        <div className={styles.container}>
-            <div className={styles['y-axis']}>
-                {yAxis.map(count => <div key={count.toString()}>{count > 0 ? `${count}` : ''}</div>)}
-            </div>
-            <div className={styles['data-container']}>
-                <div className={styles.histogram}>
-                    {xAxis.map(year => <div key={`year-${year[0]} count-${year[1]}`}
-                        style={{ height: `${(year[1] / yAxis[yAxis.length - 1]) * 100}%` }}
-                    ></div>)}
+            <div className={styles.container}>
+                <div className={styles['y-axis']}>
+                    {yAxis.map(count => <div key={count.toString()}>{count > 0 ? `${count}` : ''}</div>)}
                 </div>
-                <div className={styles.years}>
-                    {xAxis.map(year => <div key={year[0].toString()}>{year[0]}</div>)}
+                <div className={styles['data-container']}>
+                    <div className={styles.histogram}>
+                        {xAxis.map(year => <div key={`year-${year[0]} count-${year[1]}`}
+                            style={{ height: `${(year[1] / yAxis[yAxis.length - 1]) * 100}%` }}
+                        ></div>)}
+                    </div>
+                    <div className={styles.years}>
+                        {xAxis.map(year => <div key={year[0].toString()}>{year[0]}</div>)}
+                    </div>
                 </div>
             </div>
-        </div>
-        <button onClick={getNewData} className={styles['reset-btn']}>Reset</button>
+            <button onClick={getNewData} className={styles['reset-btn']}>Reset</button>
         </div>
     )
 }
