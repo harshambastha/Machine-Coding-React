@@ -40,12 +40,12 @@ const GenerateTable = () => {
             Rows - <input type="number" ref={rowsRef} />
             Columns- <input type="number" ref={colsRef} />
             <button onClick={generateNewTable}>Submit</button>
-            <table className={styles['table-container']}>
+            <table>
                 <tbody>
                     {table.map((row, rowIndex) => (
-                        <tr className={styles.row} key={`row-${rowIndex}`}>
+                        <tr key={`row-${rowIndex}`}>
                             {row.map((cellValue, colIndex) => (
-                                <td className={styles.col} key={`col-${colIndex}`}>{cellValue}</td>
+                                <td key={`col-${colIndex}`}>{cellValue}</td>
                             ))}
                         </tr>
                     ))}
