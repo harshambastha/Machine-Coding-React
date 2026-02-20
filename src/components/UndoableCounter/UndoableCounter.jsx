@@ -6,16 +6,16 @@ const UndoableCounter = () => {
     const [undoValue, setUndoValue] = useState(null);
 
     const handleRedo = () => {
-        if(undoValue){
-            setStack(prev=>[...prev, undoValue]);
+        if (undoValue) {
+            setStack(prev => [...prev, undoValue]);
             setUndoValue(null);
         }
     }
 
     const handleUndo = () => {
-        const undoedValue = {...stack[stack.length-1]};
+        const undoedValue = { ...stack[stack.length - 1] };
         setUndoValue(undoedValue);
-        setStack(prev=>prev.slice(0,prev.length-1));
+        setStack(prev => prev.slice(0, prev.length - 1));
     }
 
     const handleReset = () => {
@@ -54,8 +54,8 @@ const UndoableCounter = () => {
     return (
         <div className={styles.container}>
             <div className={styles.controls}>
-                <button onClick={handleUndo} disabled={stack.length==0}>Undo</button>
-                <button onClick={handleRedo} disabled={undoValue==null}>Redo</button>
+                <button onClick={handleUndo} disabled={stack.length == 0}>Undo</button>
+                <button onClick={handleRedo} disabled={undoValue == null}>Redo</button>
                 <button onClick={handleReset}>Reset</button>
             </div>
             <div className={styles.operations}>
@@ -74,13 +74,13 @@ const UndoableCounter = () => {
                             <div className={styles['stack-item']}>New</div>
                         </div>
                         <div className={styles['flex-column-reverse']}>
-                        {stack.map((item,index) => (
-                            <div key={`index-${index}`} className={styles['stack-header']}>
-                                <div className={styles['stack-item']}>{item.op}</div>
-                                <div className={styles['stack-item']}>{item.old}</div>
-                                <div className={styles['stack-item']}>{item.new}</div>
-                            </div>
-                        ))}
+                            {stack.map((item, index) => (
+                                <div key={`index-${index}`} className={styles['stack-header']}>
+                                    <div className={styles['stack-item']}>{item.op}</div>
+                                    <div className={styles['stack-item']}>{item.old}</div>
+                                    <div className={styles['stack-item']}>{item.new}</div>
+                                </div>
+                            ))}
                         </div>
                     </div>
                 ) : ""}
