@@ -1,26 +1,19 @@
 import { useState } from "react";
 import CheckboxList from "./CheckboxList";
-import { checkboxesData as data } from "@data/nestedCheckboxesData";
-import styles from "./NestedCheckboxes.module.css";
 
-const NestedCheckboxes = () => {
-    const [checkboxData, setCheckboxData] = useState(data);
+const NestedCheckboxes = ({ checkboxesData }) => {
+    const [checkboxData, setCheckboxData] = useState(checkboxesData);
 
     const handleOnCheck = (checked, indices) => {
-        console.log('Fn-handleOnCheck');
-        console.log('checked',checked);
-        console.log('indices',indices);
         // Simple way to make a clone.
         const newCheckboxData = JSON.parse(JSON.stringify(checkboxData));
 
         const nonFirstLevelIndices = indices.slice(1);
-        console.log('nonFirstLevelIndices',nonFirstLevelIndices);
         const modifiedCheckboxItem = nonFirstLevelIndices.reduce(
             (modifiedItem, index) => modifiedItem.children[index],
             newCheckboxData[indices[0]],
         );
 
-        console.log('modifiedCheckboxItem',modifiedCheckboxItem);
         updateCheckboxAndDescendants(modifiedCheckboxItem, checked);
         resolveCheckboxStates(
             newCheckboxData[indices[0]],
@@ -55,9 +48,6 @@ function updateCheckboxAndDescendants(checkboxItem, checked) {
  * Only direct ancestors of the modified checkbox are affected.
  */
 function resolveCheckboxStates(checkboxItem, indices) {
-    console.log('Fn-resolveCheckboxStates');
-    console.log('checkboxItem', checkboxItem);
-    console.log('indices', indices);
 
     if (indices.length > 0 && checkboxItem.children) {
         resolveCheckboxStates(checkboxItem.children[indices[0]], indices.slice(1));

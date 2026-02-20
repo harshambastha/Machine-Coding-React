@@ -1,5 +1,4 @@
 import { useEffect, useId, useRef } from "react";
-import styles from "./NestedCheckboxes.module.css";
 
 const CheckboxInput = ({ checked, label, ...props }) => {
     const id = useId();
@@ -12,7 +11,7 @@ const CheckboxInput = ({ checked, label, ...props }) => {
     }, [checked]);
 
     return (
-        <div className={styles.checkbox}>
+        <div>
             <input
                 id={id}
                 ref={ref}

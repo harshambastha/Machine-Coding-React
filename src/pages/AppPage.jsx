@@ -31,6 +31,7 @@ import { emojis } from '@data/memoryGameData'
 import { list1, list2 } from '@data/transferListData'
 import { START_YEAR, END_YEAR } from '@data/histogramData'
 import { carouselItems } from '@data/carouselData'
+import { checkboxesData } from '@data/nestedCheckboxesData'
 
 export default function AppPage() {
   const { appId } = useParams()
@@ -82,7 +83,7 @@ export default function AppPage() {
       case 'connect4':
         return <Connect4 rows={6} cols={7} />
       case 'nested-checkboxes':
-        return <NestedCheckboxes />
+        return <NestedCheckboxes checkboxesData= {checkboxesData}/>
       case 'carousel':
         return <Carousel items={carouselItems} />
       default:
