@@ -3,16 +3,11 @@ import styles from "./FileExplorer.module.css";
 
 const FileExplorer = ({ data }) => {
     const [fileData, setFileData] = useState(data);
-    const [folderOpen, setFolderOpen] = useState([]);
-    
+    const [folderOpen, setFolderOpen] = useState({});
+
     const handleFolderClick = (id) => {
-        // if id is there remove else add
-        const currentIndex = folderOpen.indexOf(id);
-        if (currentIndex == -1) {
-            setFolderOpen(prev => [...prev, id]);
-        } else {
-            setFolderOpen(prev => prev.filter((_, index) => index !== currentIndex));
-        }
+        const isOpen = folderOpen[id];
+        setFolderOpen(prev => ({ ...prev, [id]: !isOpen }));
     };
 
     const addFolder = (parentId) => {
@@ -52,7 +47,7 @@ const File = ({ data, handleFolderClick, folderOpen, addFolder, deleteFolder }) 
     return (<div>
         {data.map(item => {
             if (item.children) {
-                const folderExpanded = folderOpen.includes(item.id);
+                const folderExpanded = folderOpen[item.id];
                 return (
                     <div key={item.id.toString()} className={styles['folder-container']}>
                         <span onClick={() => handleFolderClick(item.id)} className={styles.folder}>{item.name}{folderExpanded ? '[-]' : '[+]'}</span>
