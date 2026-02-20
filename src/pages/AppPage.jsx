@@ -85,8 +85,6 @@ export default function AppPage() {
         return <NestedCheckboxes />
       case 'carousel':
         return <Carousel items={carouselItems} />
-      case 'tic-tac-toe-2':
-        return <TicTacToe2 />
       default:
         return (
           <div style={{ padding: 20 }}>
