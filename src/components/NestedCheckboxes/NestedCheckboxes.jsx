@@ -2,77 +2,57 @@ import { useState } from "react";
 import CheckboxList from "./CheckboxList";
 
 const NestedCheckboxes = ({ checkboxesData }) => {
-    const [checkboxData, setCheckboxData] = useState(checkboxesData);
+    const [data, setData] = useState(checkboxesData);
 
-    const handleOnCheck = (checked, indices) => {
-        // Simple way to make a clone.
-        const newCheckboxData = JSON.parse(JSON.stringify(checkboxData));
+    const handleCheck = (id, checked) => {
+        const updated = updateTree(data, id, checked);
+        setData(updated);
+    };
 
-        const nonFirstLevelIndices = indices.slice(1);
-        const modifiedCheckboxItem = nonFirstLevelIndices.reduce(
-            (modifiedItem, index) => modifiedItem.children[index],
-            newCheckboxData[indices[0]],
-        );
+    return <CheckboxList items={data} onCheck={handleCheck} />;
+};
 
-        updateCheckboxAndDescendants(modifiedCheckboxItem, checked);
-        resolveCheckboxStates(
-            newCheckboxData[indices[0]],
-            nonFirstLevelIndices,
-        );
+function updateTree(nodes, targetId, checked) {
+    return nodes.map((node) => {
+        // If this is the clicked node → update it + all children
+        if (node.id === targetId) {
+            return setNodeAndChildren(node, checked);
+        }
 
-        setCheckboxData(newCheckboxData);
-    }
-    return (
-        <CheckboxList items={checkboxData} onCheck={handleOnCheck} />
-    )
+        // Otherwise check inside children
+        if (node.children) {
+            const updatedChildren = updateTree(node.children, targetId, checked);
+            return updateParentState({ ...node, children: updatedChildren });
+        }
+
+        return node;
+    });
 }
 
-/**
- * Recursively set descendants of the modified checkbox
- * to the new value.
- */
-function updateCheckboxAndDescendants(checkboxItem, checked) {
-    checkboxItem.checked = checked;
-    if (!checkboxItem.children) {
-        return;
-    }
-
-    checkboxItem.children.forEach((childItem) =>
-        updateCheckboxAndDescendants(childItem, checked),
-    );
+function setNodeAndChildren(node, checked) {
+    return {
+        ...node,
+        checked,
+        children: node.children?.map((child) =>
+            setNodeAndChildren(child, checked)
+        ),
+    };
 }
 
+function updateParentState(node) {
+    if (!node.children) return node;
 
-/**
- * Update checkbox states based on the modified checkbox's new state.
- * Only direct ancestors of the modified checkbox are affected.
- */
-function resolveCheckboxStates(checkboxItem, indices) {
+    const states = node.children.map((c) => c.checked);
 
-    if (indices.length > 0 && checkboxItem.children) {
-        resolveCheckboxStates(checkboxItem.children[indices[0]], indices.slice(1));
+    if (states.every((s) => s === true)) {
+        return { ...node, checked: true };
     }
 
-    if (!checkboxItem.children) {
-        return;
+    if (states.every((s) => s === false)) {
+        return { ...node, checked: false };
     }
 
-    // Determine new checkbox state based on children.
-    const checkedChildren = checkboxItem.children.reduce(
-        (total, item) => total + Number(item.checked === true),
-        0,
-    );
-    const uncheckedChildren = checkboxItem.children.reduce(
-        (total, item) => total + Number(item.checked === false),
-        0,
-    );
-
-    if (checkedChildren === checkboxItem.children.length) {
-        checkboxItem.checked = true;
-    } else if (uncheckedChildren === checkboxItem.children.length) {
-        checkboxItem.checked = false;
-    } else {
-        checkboxItem.checked = "indeterminate";
-    }
+    return { ...node, checked: "indeterminate" };
 }
+
 export default NestedCheckboxes;

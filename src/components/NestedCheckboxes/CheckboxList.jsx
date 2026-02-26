@@ -3,29 +3,21 @@ import CheckboxInput from "./CheckboxInput";
 const CheckboxList = ({ items, onCheck }) => {
     return (
         <ul>
-            {items.map((item, index) => (
+            {items.map((item) => (
                 <li key={item.id}>
-                    <div>
-                        <CheckboxInput
-                            checked={item.checked}
-                            label={item.name}
-                            onChange={(event) => {
-                                onCheck(event.target.checked, [index]);
-                            }}
-                        />
-                    </div>
-                    {item.children && item.children.length > 0 && (
-                        <CheckboxList
-                            items={item.children}
-                            onCheck={(newValue, indices) => {
-                                onCheck(newValue, [index, ...indices]);
-                            }}
-                        />
+                    <CheckboxInput
+                        checked={item.checked}
+                        label={item.name}
+                        onChange={(e) => onCheck(item.id, e.target.checked)}
+                    />
+
+                    {item.children && (
+                        <CheckboxList items={item.children} onCheck={onCheck} />
                     )}
                 </li>
             ))}
         </ul>
     );
-}
+};
 
 export default CheckboxList;

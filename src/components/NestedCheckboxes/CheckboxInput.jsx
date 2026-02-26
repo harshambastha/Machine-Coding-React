@@ -5,9 +5,9 @@ const CheckboxInput = ({ checked, label, ...props }) => {
     const ref = useRef(null);
 
     useEffect(() => {
-        if (!ref.current) return;
-
-        ref.current.indeterminate = checked === 'indeterminate';
+        if (ref.current) {
+            ref.current.indeterminate = checked === "indeterminate";
+        }
     }, [checked]);
 
     return (
@@ -16,12 +16,12 @@ const CheckboxInput = ({ checked, label, ...props }) => {
                 id={id}
                 ref={ref}
                 type="checkbox"
-                checked={checked === true || checked === false ? checked : false}
+                checked={checked === true}
                 {...props}
             />
             <label htmlFor={id}>{label}</label>
         </div>
     );
-}
+};
 
 export default CheckboxInput;
