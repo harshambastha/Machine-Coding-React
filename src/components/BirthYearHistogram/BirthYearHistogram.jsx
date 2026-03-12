@@ -1,75 +1,105 @@
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import styles from "./BirthYearHistogram.module.css";
 
-const BirthYearHistogram = () => {
-    const [yAxis, setYAxis] = useState([]);
-    const [xAxis, setXAxis] = useState([]);
+const COUNT = 200;
+const MIN = 1950;
+const MAX = 2019;
+const BUCKET_SIZE = 10;
+const Y_AXIS_SCALE = 10;
 
-    const getHistogram = () => {
-        const yearsWithCount = new Map();
-        const formattedYAxis = [];
-        const formattedXAxis = [];
-        let max = 0;
+// Extract out the fetching of numbers.
+async function fetchYearsData() {
+  const response = await fetch(
+    `https://www.random.org/integers/?num=${COUNT}&min=${MIN}&max=${MAX}&col=1&base=10&format=plain&rnd=new`
+  );
 
-        const getData = async () => {
-            const res = await fetch(`https://www.random.org/integers/?num=200&min=1950&max=2019&col=1&base=10&format=plain`);
-            const data = await res.text();
-            const dataInArray = data.split('\n').filter(year => Boolean(year)).map(year => +year);
-            formatData(dataInArray);
-        }
-        const formatData = (dataInArray) => {
-            dataInArray.forEach(year => {
-                const from = Math.floor(year / 10) * 10;
-                if (yearsWithCount.has(from)) {
-                    yearsWithCount.set(from, yearsWithCount.get(from) + 1);
-                } else {
-                    yearsWithCount.set(from, 1);
-                }
-                max = Math.max(max, yearsWithCount.get(from));
-            });
-
-            max = Math.floor((max + 10) / 10) * 10;
-            for (let val = 0; val <= max; val += 10) {
-                formattedYAxis.push(val);
-            }
-            yearsWithCount.forEach((val, key) => {
-                formattedXAxis.push([key, val]);
-            })
-            formattedXAxis.sort((a, b) => a[0] - b[0]);
-            setYAxis(formattedYAxis);
-            setXAxis(formattedXAxis);
-        }
-        getData();
-    }
-
-    useEffect(() => {
-        getHistogram();
-    }, []);
-
-    const getNewData = () => {
-        getHistogram();
-    }
-
-    return (
-        <div className={styles['parent-container']}>
-            <div className={styles.container}>
-                <div className={styles['y-axis']}>
-                    {yAxis.map(count => <div key={count.toString()}>{count > 0 ? `${count}` : ''}</div>)}
-                </div>
-                <div className={styles['data-container']}>
-                    <div className={styles.histogram}>
-                        {xAxis.map(year => <div key={`year-${year[0]} count-${year[1]}`}
-                            style={{ height: `${(year[1] / yAxis[yAxis.length - 1]) * 100}%` }}
-                        ></div>)}
-                    </div>
-                    <div className={styles.years}>
-                        {xAxis.map(year => <div key={year[0].toString()}>{year[0]}</div>)}
-                    </div>
-                </div>
-            </div>
-            <button onClick={getNewData} className={styles['reset-btn']}>Reset</button>
-        </div>
-    )
+  const numbersString = await response.text();
+  return (
+    numbersString
+      .split("\n")
+      .filter(Boolean)
+      // Converts strings into numbers.
+      .map((number) => +number)
+  );
 }
 
-export default BirthYearHistogram;
+// Group array of years into decade buckets.
+function groupIntoBuckets(years) {
+  const frequency = {};
+
+  years.forEach((year) => {
+    const bucket = Math.floor(year / BUCKET_SIZE) * BUCKET_SIZE;
+    frequency[bucket] ||= 0; // Initialize to 0 if undefined or falsy
+    frequency[bucket]++;
+  });
+
+  return frequency;
+}
+
+export default function App() {
+  // Object of year bucket to number of data points in that bucket.
+  const [bucketFrequency, setBucketFrequency] = useState({});
+
+  async function fetchData() {
+    const yearsData = await fetchYearsData(); // [1950, 1964, 1987,....]
+    const frequency = groupIntoBuckets(yearsData);
+
+    setBucketFrequency(frequency);
+  }
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const maxBucketFrequency = Math.max(0, ...Object.values(bucketFrequency));
+  const maxYAxisValue = Math.min(
+    Math.ceil(maxBucketFrequency / Y_AXIS_SCALE) * Y_AXIS_SCALE,
+    COUNT
+  );
+
+  const bucketLabels = Array.from({
+    length: Math.ceil((MAX - MIN) / BUCKET_SIZE),
+  }).map((_, index) => MIN + index * BUCKET_SIZE);
+
+  return (
+    <div className={styles.wrapper}>
+      <div className={styles.chart}>
+        <div className={styles['chart__y-axis']}>
+          <div className={styles['chart__y-axis__items']}>
+            {Array.from({
+              length: maxYAxisValue / Y_AXIS_SCALE,
+            }).map((_, index) => (
+              <div key={index} className={styles['chart__y-axis__item']}>
+                {(index + 1) * Y_AXIS_SCALE}
+              </div>
+            ))}
+          </div>
+          <div className={styles['chart__y-axis__zero']}>0</div>
+        </div>
+        <div className={styles.chart__main}>
+          <div className={styles.chart__main__bars}>
+            {bucketLabels.map((bucket) => (
+              <div
+                key={bucket}
+                className={styles.chart__main__bars__item}
+                style={{
+                  height: `${
+                    ((bucketFrequency[bucket] ?? 0) / maxYAxisValue) * 100
+                  }%`,
+                }}
+              />
+            ))}
+          </div>
+          <div className={styles['chart__x-axis']}>
+            {bucketLabels.map((bucket) => (
+              <div className={styles['chart__x-axis__item']} key={bucket}>
+                {bucket}
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+      <button onClick={fetchData}>Refresh</button>
+    </div>
+  );
+}

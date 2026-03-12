@@ -1,48 +1,79 @@
-.parent-container {
-    display: flex;
-    flex-direction: column;
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0;
 }
 
-.container {
-    display: flex;
+.chart {
+  --chart-width: 100%;
+  --chart-height: 300px;
+  --axis-color: #000;
+  --bar-color: rebeccapurple;
+  --bars-gap: 16px;
+
+  display: flex;
+  max-width: 600px;
+  width: var(--chart-width);
+  height: var(--chart-height);
 }
 
-.y-axis {
-    display: flex;
-    flex-direction: column-reverse;
-    row-gap: 20px;
-    padding-right: 20px;
+.chart__y-axis {
+  width: 40px;
+  display: flex;
+  flex-direction: column;
 }
 
-.histogram {
-    display: flex;
-    height: 100%;
-    column-gap: 40px;
-    padding-left: 40px;
-    align-items: end;
-    border-bottom: 1px solid black;
-    border-left: 1px solid black;
+.chart__y-axis__items {
+  display: flex;
+  flex-direction: column-reverse;
+  height: 100%;
+  border-right: 1px solid var(--axis-color);
+  margin-bottom: 8px;
+  align-items: center;
 }
 
-.histogram div{
-    background-color: rgb(236, 128, 128);
-    border: 1px solid black;
-    border-bottom: 0;
-    width: 40px;
+.chart__y-axis__item {
+  flex-grow: 1;
+  transform: translateY(-8px);
 }
 
-.years {
-    display: flex;
-    column-gap: 40px;
-    padding-left: 41px;
+.chart__y-axis__zero {
+  text-align: center;
+  transform: translateY(-16px);
 }
 
-.years div {
-    width: 40px;
-    border: 1px solid transparent;
+.chart__main {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
-.reset-btn {
-    margin-top: 40px;
-    width: fit-content;
+.chart__main__bars {
+  display: flex;
+  flex-grow: 1;
+  align-items: flex-end;
+  border-bottom: 1px solid var(--axis-color);
+  gap: var(--bars-gap);
+  padding: 0 var(--bars-gap);
+}
+
+.chart__main__bars__item {
+  background-color: var(--bar-color);
+  flex-grow: 1;
+}
+
+.chart__x-axis {
+  display: flex;
+  gap: var(--bars-gap);
+  justify-content: space-around;
+  padding: 0 var(--bars-gap);
+}
+
+.chart__x-axis__item {
+  flex-grow: 1;
+  flex-basis: 0%;
+  text-align: center;
 }
