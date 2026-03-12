@@ -2,16 +2,30 @@ import { useState, useEffect } from 'react';
 
 export const useFetch = (url) => {
     const [data, setData] = useState(null);
-    const [loading, setLoading] = useState(true);
+    const [isPending, setIsPending] = useState(true);
     const [error, setError] = useState(null);
 
     useEffect(() => {
-        fetch(url)
-            .then(res => res.json())
-            .then(setData)
-            .catch(setError)
-            .finally(() => setLoading(false));
+        const controller = new AbortController();
+
+        const fetchData = async () => {
+            try {
+                const res = await fetch(url, { signal: controller.signal });
+                const d = await res.json();
+                setData(d);
+            } catch (err) {
+                if (err.name !== "AbortError") {
+                    setError(err.message);
+                }
+            } finally {
+                setIsPending(false);
+            }
+        };
+
+        fetchData();
+
+        return () => controller.abort();
     }, [url]);
 
-    return { data, loading, error };
+    return { data, isPending, error };
 };
