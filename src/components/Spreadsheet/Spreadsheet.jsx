@@ -21,7 +21,7 @@ const Spreadsheet = ({ rows, cols }) => {
             <th className={styles['table-header']}>{rowIndex + 1}</th>
             {Array.from({ length: cols }).map((_, colIndex) => (
               <td key={colIndex} className={styles.cell}>
-                <TableInput className={styles.input}/>
+                <TableInput className={styles.input} />
               </td>
             ))}
           </tr>

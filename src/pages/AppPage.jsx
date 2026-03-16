@@ -22,6 +22,7 @@ import TrafficLights from '@components/TrafficLights/TrafficLights'
 import TransferList from '@components/TransferList/TransferList'
 import UndoableCounter from '@components/UndoableCounter/UndoableCounter'
 import WhackAMole from '@components/WhackAMole/WhackAMole'
+import Spreadsheet from '@components/Spreadsheet/Spreadsheet'
 
 import { accordionData } from '@data/accordionData';
 import DropdownDemo from '@components/Dropdown/DropdownDemo';
@@ -86,6 +87,8 @@ export default function AppPage() {
         return <NestedCheckboxes checkboxesData= {checkboxesData}/>
       case 'carousel':
         return <Carousel items={carouselItems} />
+      case 'spreadsheet':
+        return <Spreadsheet rows={20} cols={5}/>
       default:
         return (
           <div style={{ padding: 20 }}>

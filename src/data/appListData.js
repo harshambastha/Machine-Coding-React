@@ -23,5 +23,6 @@ export const apps = [
   { id: 'carousel', title: 'Carousel' },
   { id: 'autocomplete', title: 'Autocomplete' },
   { id: 'auth-code-input', title: 'Auth Code Input' },
-  { id: 'dropdown', title: 'Dropdown' }
+  { id: 'dropdown', title: 'Dropdown' },
+  { id: 'spreadsheet', title: 'Spreadsheet' },
 ];
