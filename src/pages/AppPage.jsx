@@ -23,6 +23,7 @@ import TransferList from '@components/TransferList/TransferList'
 import UndoableCounter from '@components/UndoableCounter/UndoableCounter'
 import WhackAMole from '@components/WhackAMole/WhackAMole'
 import Spreadsheet from '@components/Spreadsheet/Spreadsheet'
+import KanbanBoard from '@components/KanbanBoard/KanbanBoard'
 
 import { accordionData } from '@data/accordionData';
 import DropdownDemo from '@components/Dropdown/DropdownDemo';
@@ -33,6 +34,7 @@ import { list1, list2 } from '@data/transferListData'
 import { START_YEAR, END_YEAR } from '@data/histogramData'
 import { carouselItems } from '@data/carouselData'
 import { checkboxesData } from '@data/nestedCheckboxesData'
+import { kanbanColumns, kanbanInitialTasks } from '@data/kanbanBoardData'
 
 export default function AppPage() {
   const { appId } = useParams()
@@ -89,6 +91,8 @@ export default function AppPage() {
         return <Carousel items={carouselItems} />
       case 'spreadsheet':
         return <Spreadsheet rows={20} cols={5}/>
+      case 'kanban-board':
+        return <KanbanBoard columns={kanbanColumns} initialTasks={kanbanInitialTasks} />
       default:
         return (
           <div style={{ padding: 20 }}>

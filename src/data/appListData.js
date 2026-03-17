@@ -25,4 +25,5 @@ export const apps = [
   { id: 'auth-code-input', title: 'Auth Code Input' },
   { id: 'dropdown', title: 'Dropdown' },
   { id: 'spreadsheet', title: 'Spreadsheet' },
+  { id: 'kanban-board', title: 'Kanban Board' },
 ];

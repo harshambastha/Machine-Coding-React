@@ -1,0 +1,140 @@
+.board {
+  display: flex;
+  gap: 20px;
+  padding: 30px;
+  min-height: 100vh;
+  background-color: #f0f2f5;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.column {
+  background-color: #ebecf0;
+  border-radius: 12px;
+  padding: 16px;
+  width: 280px;
+  min-height: 300px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: background-color 0.2s, box-shadow 0.2s;
+}
+
+.columnDragOver {
+  background-color: #d6e4ff;
+  box-shadow: 0 0 0 2px #0052cc;
+}
+
+.columnHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.columnTitle {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+  color: #172b4d;
+}
+
+.count {
+  background-color: #dfe1e6;
+  border-radius: 12px;
+  padding: 2px 8px;
+  font-size: 13px;
+  color: #5e6c84;
+  font-weight: 600;
+}
+
+.cards {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1;
+}
+
+.card {
+  background-color: #ffffff;
+  border-radius: 8px;
+  padding: 12px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+  cursor: grab;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 8px;
+  font-size: 14px;
+  color: #172b4d;
+  transition: box-shadow 0.2s;
+  user-select: none;
+}
+
+.card:hover {
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.18);
+}
+
+.card:active {
+  cursor: grabbing;
+}
+
+.deleteBtn {
+  background: none;
+  border: none;
+  color: #97a0af;
+  cursor: pointer;
+  font-size: 12px;
+  padding: 0;
+  line-height: 1;
+  flex-shrink: 0;
+  opacity: 0;
+  transition: opacity 0.15s, color 0.15s;
+}
+
+.card:hover .deleteBtn {
+  opacity: 1;
+}
+
+.deleteBtn:hover {
+  color: #e53e3e;
+}
+
+.addTask {
+  display: flex;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.addTask input {
+  flex: 1;
+  border: 1px solid #dfe1e6;
+  border-radius: 6px;
+  padding: 8px 10px;
+  font-size: 13px;
+  outline: none;
+  background: white;
+  color: #172b4d;
+  transition: border-color 0.2s, box-shadow 0.2s;
+}
+
+.addTask input:focus {
+  border-color: #0052cc;
+  box-shadow: 0 0 0 2px rgba(0, 82, 204, 0.2);
+}
+
+.addTask button {
+  background-color: #0052cc;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 8px 13px;
+  font-size: 18px;
+  cursor: pointer;
+  font-weight: bold;
+  line-height: 1;
+  transition: background-color 0.2s;
+}
+
+.addTask button:hover {
+  background-color: #0065ff;
+}
