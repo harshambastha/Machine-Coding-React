@@ -24,6 +24,7 @@ import UndoableCounter from '@components/UndoableCounter/UndoableCounter'
 import WhackAMole from '@components/WhackAMole/WhackAMole'
 import Spreadsheet from '@components/Spreadsheet/Spreadsheet'
 import KanbanBoard from '@components/KanbanBoard/KanbanBoard'
+import ListVirtualization from '@components/ListVirtualization/ListVirualization'
 
 import { accordionData } from '@data/accordionData';
 import DropdownDemo from '@components/Dropdown/DropdownDemo';
@@ -35,6 +36,7 @@ import { START_YEAR, END_YEAR } from '@data/histogramData'
 import { carouselItems } from '@data/carouselData'
 import { checkboxesData } from '@data/nestedCheckboxesData'
 import { kanbanColumns, kanbanInitialTasks } from '@data/kanbanBoardData'
+import { listVirtualizationData } from '@data/ListVirtualizationData'
 
 export default function AppPage() {
   const { appId } = useParams()
@@ -93,6 +95,8 @@ export default function AppPage() {
         return <Spreadsheet rows={20} cols={5}/>
       case 'kanban-board':
         return <KanbanBoard columns={kanbanColumns} initialTasks={kanbanInitialTasks} />
+      case 'list-virtualization':
+        return <ListVirtualization data={listVirtualizationData} />
       default:
         return (
           <div style={{ padding: 20 }}>
