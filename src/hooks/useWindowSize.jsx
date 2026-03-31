@@ -1,17 +1,21 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
+import { useDebounce } from './useDebounce';
 
 export const useWindowSize = () => {
     const [size, setSize] = useState({
-        width: window.innerWidth,
-        height: window.innerHeight
+        width: typeof window !== 'undefined' ? window.innerWidth : 0,
+        height: typeof window !== 'undefined' ? window.innerHeight : 0
     });
 
-    useEffect(() => {
-        const handleResize = () =>
-            setSize({ width: window.innerWidth, height: window.innerHeight });
+    const handleResize = useCallback(() => {
+        setSize({ width: window.innerWidth, height: window.innerHeight });
+    }, []);
 
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
+    useEffect(() => {
+        const debouncedSetSize = useDebounce(handleResize, 100);
+        
+        window.addEventListener("resize", debouncedSetSize);
+        return () => window.removeEventListener("resize", debouncedSetSize);
     }, []);
 
     return size;
