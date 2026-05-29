@@ -27,5 +27,6 @@ export const apps = [
   { id: 'spreadsheet', title: 'Spreadsheet' },
   { id: 'kanban-board', title: 'Kanban Board' },
   { id: 'list-virtualization', title: 'List Virtualization' },
-  { id: 'toast', title: 'Toast/Snackbar Demo' }
+  { id: 'toast', title: 'Toast/Snackbar Demo' },
+  { id: 'quiz', title: 'Quiz' }
 ];

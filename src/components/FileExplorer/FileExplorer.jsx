@@ -44,22 +44,23 @@ const FileExplorer = ({ data }) => {
 }
 
 const File = ({ data, handleFolderClick, folderOpen, addFolder, deleteFolder }) => {
-    return (<div>
-        {data.map(item => {
-            if (item.children) {
-                const folderExpanded = folderOpen[item.id];
-                return (
-                    <div key={item.id.toString()} className={styles['folder-container']}>
-                        <span onClick={() => handleFolderClick(item.id)} className={styles.folder}>{item.name}{folderExpanded ? '[-]' : '[+]'}</span>
-                        <button className={styles.button} onClick={() => addFolder(item.id)}>Add</button>
-                        <button className={styles.button} onClick={() => deleteFolder(item.id)}>Delete</button>
-                        {folderExpanded && <File data={item.children} folderOpen={folderOpen} handleFolderClick={handleFolderClick} addFolder={addFolder} deleteFolder={deleteFolder} />}
-                    </div>
-                )
-            } else {
-                return <div key={item.id.toString()} className={styles['folder-container']}>{item.name}</div>
-            }
-        })}
-    </div>)
+    return (
+        <div>
+            {data.map(item => {
+                if (item.children) {
+                    const folderExpanded = folderOpen[item.id];
+                    return (
+                        <div key={item.id.toString()} className={styles['folder-container']}>
+                            <span onClick={() => handleFolderClick(item.id)} className={styles.folder}>{item.name}{folderExpanded ? '[-]' : '[+]'}</span>
+                            <button className={styles.button} onClick={() => addFolder(item.id)}>Add</button>
+                            <button className={styles.button} onClick={() => deleteFolder(item.id)}>Delete</button>
+                            {folderExpanded && <File data={item.children} folderOpen={folderOpen} handleFolderClick={handleFolderClick} addFolder={addFolder} deleteFolder={deleteFolder} />}
+                        </div>
+                    )
+                } else {
+                    return <div key={item.id.toString()} className={styles['folder-container']}>{item.name}</div>
+                }
+            })}
+        </div>)
 }
 export default FileExplorer;

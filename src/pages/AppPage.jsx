@@ -2,7 +2,7 @@ import { useParams } from 'react-router-dom'
 import GenerateTable from '@components/GenerateTable/GenerateTable'
 import AutocompleteDemo from '@components/Autocomplete/AutocompleteDemo'
 import Accordion from '@components/Accordion/Accordion'
-import Tabs from '@components/Tabs/Tabs'
+import {Tabs, TabList, TabsTrigger, TabsPanel} from '@components/Tabs/Tabs'
 import DataTable from '@components/DataTable/DataTable'
 import AuthCodeInput from '@components/AuthCodeInput/AuthCodeInput'
 import BirthYearHistogram from '@components/BirthYearHistogram/BirthYearHistogram'
@@ -25,6 +25,8 @@ import WhackAMole from '@components/WhackAMole/WhackAMole'
 import Spreadsheet from '@components/Spreadsheet/Spreadsheet'
 import KanbanBoard from '@components/KanbanBoard/KanbanBoard'
 import ListVirtualization from '@components/ListVirtualization/ListVirualization'
+import ToastDemo from '@components/Toast/ToastDemo'
+import Quiz from '@components/Quiz/Quiz'
 
 import { accordionData } from '@data/accordionData';
 import DropdownDemo from '@components/Dropdown/DropdownDemo';
@@ -36,7 +38,8 @@ import { START_YEAR, END_YEAR } from '@data/histogramData'
 import { carouselItems } from '@data/carouselData'
 import { checkboxesData } from '@data/nestedCheckboxesData'
 import { kanbanColumns, kanbanInitialTasks } from '@data/kanbanBoardData'
-import { listVirtualizationData } from '@data/ListVirtualizationData'
+import { listVirtualizationData } from '@data/listVirtualizationData'
+import { questions } from '@data/quizData'
 
 export default function AppPage() {
   const { appId } = useParams()
@@ -52,7 +55,19 @@ export default function AppPage() {
       case 'accordion':
         return <Accordion data={accordionData} />
       case 'tabs':
-        return <Tabs data={tabData} />
+        return (
+          <Tabs defaultTab="description">
+            <TabList>
+              <TabsTrigger value="description">Description</TabsTrigger>
+              <TabsTrigger value="reviews">Reviews</TabsTrigger>
+              <TabsTrigger value="sizing">Sizing</TabsTrigger>
+            </TabList>
+
+            <TabsPanel value="description">Product description here</TabsPanel>
+            <TabsPanel value="reviews">Customer reviews here</TabsPanel>
+            <TabsPanel value="sizing">Size guide here</TabsPanel>
+          </Tabs>
+        )
       case 'data-table':
         return <DataTable />
       case 'auth-code-input':
@@ -88,15 +103,19 @@ export default function AppPage() {
       case 'connect4':
         return <Connect4 rows={6} cols={7} />
       case 'nested-checkboxes':
-        return <NestedCheckboxes checkboxesData= {checkboxesData}/>
+        return <NestedCheckboxes checkboxesData={checkboxesData} />
       case 'carousel':
         return <Carousel items={carouselItems} />
       case 'spreadsheet':
-        return <Spreadsheet rows={20} cols={5}/>
+        return <Spreadsheet rows={20} cols={5} />
       case 'kanban-board':
         return <KanbanBoard columns={kanbanColumns} initialTasks={kanbanInitialTasks} />
       case 'list-virtualization':
         return <ListVirtualization data={listVirtualizationData} />
+      case 'toast':
+        return <ToastDemo />
+      case 'quiz':
+        return <Quiz questions={questions} duration={3000}/>
       default:
         return (
           <div style={{ padding: 20 }}>
